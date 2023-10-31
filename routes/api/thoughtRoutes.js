@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { addThoughtReaction, removeThoughtReaction } = require('../../controllers/thoughtController');
 const {
   getThoughts,
   getSingleThoughts,
@@ -9,20 +10,20 @@ const {
   removeReaction,
 } = require('../../controllers/thoughtsController');
 
-// /api/videos
-router.route('/').get(getReaction).post(createVideo);
+// /api/thought
+router.route('/').get(getReaction).post(createThought);
 
-// /api/videos/:videoId
+// /api/thoughts/:thoughtId
 router
-  .route('/:videoId')
-  .get(getSingleVideo)
-  .put(updateVideo)
-  .delete(deleteVideo);
+  .route('/:thoughtId')
+  .get(getSingleThought)
+  .put(updateThought)
+  .delete(deleteThought);
 
-// /api/videos/:videoId/responses
-router.route('/:videoId/responses').post(addVideoResponse);
+// /api/thoughts/:thoughtId/reactions
+router.route('/:thoughtId/responses').post(addThoughtReaction);
 
 // /api/videos/:videoId/responses/:responseId
-router.route('/:videoId/responses/:responseId').delete(removeVideoResponse);
+router.route('/:thoughtId/reactions/:reactionId').delete(removeThoughtReaction);
 
 module.exports = router;
