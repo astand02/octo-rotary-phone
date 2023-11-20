@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 const Reactions = require('./Reaction');
 
-// Schema to create Post model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -29,15 +28,12 @@ const thoughtSchema = new Schema(
   }
 );
 
-// Create
 thoughtSchema
   .virtual('reactionCount')
-  // Getter
   .get(function () {
     return this.reactions.length;
   });
 
-// Initialize our Video model
-const Thought = model('thought', thoughtSchema);
+const Thought = model('thoughts', thoughtSchema);
 
 module.exports = Thought;
