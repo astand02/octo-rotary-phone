@@ -33,6 +33,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // update user
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -51,6 +52,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+// delete user
   async deleteUser(req, res) {
     try {
       const thought = await Thought.findOneAndRemove({ _id: req.body.userId });
@@ -63,19 +65,20 @@ module.exports = {
       if (!user) {
         return res
           .status(404)
-          .json({ message: 'Video created but no user with this id!' });
+          .json({ message: 'No user with this id!' });
       }
 
-      res.json({ message: 'Video successfully deleted!' });
+      res.json({ message: 'User was successfully deleted!' });
     } catch (err) {
       res.status(500).json(err);
     }
   },
+//add friend
   async addFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $addToSet: { friends: req.body } },
+        { $addToSet: { friends: req.params.friendId } },
         { runValidators: true, new: true }
       );
 
@@ -88,20 +91,20 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Remove video response
+// remove friend
   async removeFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $pull: { friends: { _id: req.params.friendId } } },
+        { $pull: { friends: req.params.friendId } },
         { runValidators: true, new: true }
       )
 
-      if (!friend) {
+      if (!friends) {
         return res.status(404).json({ message: 'No friend with this id!' });
       }
 
-      res.json(friend);
+      res.json(friends);
     } catch (err) {
       res.status(500).json(err);
     }
